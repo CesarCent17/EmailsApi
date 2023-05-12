@@ -10,19 +10,20 @@ namespace EmailsApi.Services
 {
     public class EmailServiceSendGrid : IEmailService
     {
-        private readonly SendGridConfig _sendGridConfig;
+        private readonly IConfiguration _configuration;
 
-        public EmailServiceSendGrid(IOptions<SendGridConfig> options) 
+
+        public EmailServiceSendGrid(IConfiguration configuration) 
         { 
-            _sendGridConfig = options.Value;
+            _configuration = configuration;
         }
         public async Task<bool> SendIndividualEmailAsync(IndividualEmailShippingRequest shippingRequest)
         {
             try
             {
-                var apiKey = _sendGridConfig.ApiKey;
+                var apiKey = _configuration["ApiKey"];
                 var client = new SendGridClient(apiKey);
-                var from = new EmailAddress(_sendGridConfig.From);
+                var from = new EmailAddress(_configuration["From"]);
                 var subject = shippingRequest.Subject;
                 var to = new EmailAddress(shippingRequest.To);
                 var plainTextContent = shippingRequest.Body;
@@ -40,7 +41,28 @@ namespace EmailsApi.Services
 
         public async Task<bool> SendMultipleEmailAsync(MultipleEmailsShippingRequest shippingRequest)
         {
-            return false;
+            try
+            {
+                var receivers = shippingRequest.Receivers.ToList();
+                var apiKey = _configuration["ApiKey"];
+
+                foreach (var receiver in receivers)
+                {
+                    var client = new SendGridClient(apiKey);
+                    var from = new EmailAddress(_configuration["From"]);
+                    var subject = shippingRequest.Subject;
+                    var to = new EmailAddress(receiver.MailAddress);
+                    var plainTextContent = shippingRequest.Body;
+                    var htmlContent = $"<strong>{shippingRequest.Body}</strong>";
+                    var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+                    var response = await client.SendEmailAsync(msg);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
     }
 }

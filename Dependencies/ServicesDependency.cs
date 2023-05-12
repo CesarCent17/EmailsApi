@@ -15,10 +15,11 @@ namespace EmailsApi.Dependencies
         {
             services.AddScoped<IEmailService, EmailServiceMicrosoft>();
             services.AddScoped<IEmailService, EmailServiceSendGrid>();
-            services.Configure<SendGridConfig>(configuration.GetSection("SendGrid"));
-            services.AddScoped<SendGridConfig>();
 
+            //services.Configure<SendGridConfig>(configuration.GetSection("SendGrid"));
+            //services.AddScoped<SendGridConfig>();
 
+            services.AddSingleton<IConfiguration>(configuration);
             services.Configure<SmtpConfig>(configuration.GetSection("Smtp"));
             services.AddTransient<SmtpClient>(serviceProvider =>
             {
@@ -26,7 +27,7 @@ namespace EmailsApi.Dependencies
 
                 var smtpClient = new SmtpClient(options.Server, options.Port)
                 {
-                    Credentials = new NetworkCredential(options.Username, options.Password),
+                    Credentials = new NetworkCredential(configuration["From"], configuration["Password"]),
                     EnableSsl = options.EnableSsl
                 };
 

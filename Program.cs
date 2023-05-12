@@ -1,7 +1,9 @@
 using EmailsApi.Dependencies;
-
+using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Configuration.AddEnvironmentVariables();
+var configuration = builder.Configuration;
 
 // Add services to the container.
 ServicesDependency.AddServices(builder.Services, builder.Configuration);

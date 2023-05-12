@@ -18,8 +18,7 @@ namespace EmailsApi.Services
         {
             try
             {
-                //var from = _configuration.GetSection("Smtp")["From"];
-                var from = _configuration.GetValue<string>("Smtp:Username");
+                var from = _configuration["From"];
                 var message = new MailMessage();
                 message.From = new MailAddress(from);
                 message.To.Add(new MailAddress(shippingRequest.To));
