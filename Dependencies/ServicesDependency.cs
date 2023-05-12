@@ -13,7 +13,12 @@ namespace EmailsApi.Dependencies
     {
         public static void AddServices(IServiceCollection services, IConfiguration configuration)
         {
-            services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IEmailService, EmailServiceMicrosoft>();
+            services.AddScoped<IEmailService, EmailServiceSendGrid>();
+            services.Configure<SendGridConfig>(configuration.GetSection("SendGrid"));
+            services.AddScoped<SendGridConfig>();
+
+
             services.Configure<SmtpConfig>(configuration.GetSection("Smtp"));
             services.AddTransient<SmtpClient>(serviceProvider =>
             {

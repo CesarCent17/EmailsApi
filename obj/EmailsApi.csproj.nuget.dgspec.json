@@ -1,21 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Projects\\.NET\\EmailsApi\\EmailsApi.csproj": {}
+    "C:\\Users\\Public\\cesarcentprojects\\.NET\\learn\\EmailsApi\\EmailsApi.csproj": {}
   },
   "projects": {
-    "D:\\Projects\\.NET\\EmailsApi\\EmailsApi.csproj": {
+    "C:\\Users\\Public\\cesarcentprojects\\.NET\\learn\\EmailsApi\\EmailsApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Projects\\.NET\\EmailsApi\\EmailsApi.csproj",
+        "projectUniqueName": "C:\\Users\\Public\\cesarcentprojects\\.NET\\learn\\EmailsApi\\EmailsApi.csproj",
         "projectName": "EmailsApi",
-        "projectPath": "D:\\Projects\\.NET\\EmailsApi\\EmailsApi.csproj",
-        "packagesPath": "C:\\Users\\cesar\\.nuget\\packages\\",
-        "outputPath": "D:\\Projects\\.NET\\EmailsApi\\obj\\",
+        "projectPath": "C:\\Users\\Public\\cesarcentprojects\\.NET\\learn\\EmailsApi\\EmailsApi.csproj",
+        "packagesPath": "C:\\Users\\dmontesdeoca\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Public\\cesarcentprojects\\.NET\\learn\\EmailsApi\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+        ],
         "configFilePaths": [
-          "C:\\Users\\cesar\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\dmontesdeoca\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
@@ -40,6 +46,10 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "SendGrid": {
+              "target": "Package",
+              "version": "[9.28.1, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.2.3, )"

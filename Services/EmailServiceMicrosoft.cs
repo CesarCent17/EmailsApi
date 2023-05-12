@@ -2,13 +2,14 @@
 using EmailsApi.Models;
 using System.Net.Mail;
 
+
 namespace EmailsApi.Services
 {
-    public class EmailService : IEmailService
+    public class EmailServiceMicrosoft : IEmailService
     {
         private readonly SmtpClient _smtpClient;
         private readonly IConfiguration _configuration;
-        public EmailService(SmtpClient smtpClient, IConfiguration configuration) 
+        public EmailServiceMicrosoft(SmtpClient smtpClient, IConfiguration configuration) 
         {
             _smtpClient = smtpClient;
             _configuration = configuration;
