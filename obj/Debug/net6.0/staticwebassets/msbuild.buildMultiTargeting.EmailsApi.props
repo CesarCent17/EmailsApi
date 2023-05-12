@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\EmailsApi.props" />
+</Project>
