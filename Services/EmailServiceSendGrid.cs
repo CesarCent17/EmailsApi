@@ -1,6 +1,7 @@
 ﻿using EmailsApi.Configs;
 using EmailsApi.Interfaces;
 using EmailsApi.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using SendGrid;
 using SendGrid.Helpers.Mail;
@@ -17,7 +18,7 @@ namespace EmailsApi.Services
         { 
             _configuration = configuration;
         }
-        public async Task<bool> SendIndividualEmailAsync(IndividualEmailShippingRequest shippingRequest)
+        public async Task<bool> SendIndividualEmailAsync([FromForm] IndividualEmailShippingRequest shippingRequest)
         {
             try
             {
@@ -26,9 +27,18 @@ namespace EmailsApi.Services
                 var from = new EmailAddress(_configuration["From"]);
                 var subject = shippingRequest.Subject;
                 var to = new EmailAddress(shippingRequest.To);
+                var PdfFile = shippingRequest.PdfFile;
                 var plainTextContent = shippingRequest.Body;
                 var htmlContent = $"<strong>{shippingRequest.Body}</strong>";
                 var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+
+                using (var ms = new MemoryStream())
+                {
+                    PdfFile.CopyTo(ms);
+                    var archivoBytes = ms.ToArray();
+                    msg.AddAttachment(PdfFile.FileName, Convert.ToBase64String(archivoBytes));
+                }
+
                 var response = await client.SendEmailAsync(msg);
                 return true;
             }

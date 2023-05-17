@@ -2,7 +2,6 @@
 using EmailsApi.Models;
 using EmailsApi.Services;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 
 namespace EmailsApi.Controllers
 {
@@ -25,7 +24,7 @@ namespace EmailsApi.Controllers
         {
             var responseEmail = await _emailServiceMicrosoft.SendIndividualEmailAsync(shippingRequest);
             if (responseEmail == false) return BadRequest(new { message = "Error al enviar el email" });
-            return Ok(new {status= 200, message = "Email enviado con exito!"});
+            return Ok(new { status = 200, message = "Email enviado con exito!" });
         }
 
         [HttpPost]
@@ -39,7 +38,7 @@ namespace EmailsApi.Controllers
 
         [HttpPost]
         [Route("SendIndividualEmail/SendGrid")]
-        public async Task<ActionResult> PostSendGrid(IndividualEmailShippingRequest shippingRequest)
+        public async Task<ActionResult> PostSendGrid([FromForm] IndividualEmailShippingRequest shippingRequest)
         {
             var responseEmail = await _emailServiceSendGrid.SendIndividualEmailAsync(shippingRequest);
             if (responseEmail == false) return BadRequest(new { message = "Error al enviar el email" });
